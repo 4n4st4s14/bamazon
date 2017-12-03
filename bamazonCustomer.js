@@ -65,7 +65,31 @@ function toBuy(res) {
       return false;
     }
   }]).then(function(answer){
-  
+     //console.log("ANSWERS", answer.idOfItem);
+    //  console.log("RESPONSE", res[4].id);
+   for(var i=0; i<res.length; i++){
+     if(parseInt(res[i].id) === parseInt(answer.idOfItem)){
+       var purchase = res[i];
+       //console.log(purchase);
+       if(parseInt(answer.amount) > parseInt(purchase.stock_quantity)){
+         console.log("Sorry, insufficient quantity!")
+         toBuy(res);
+       }
+       else {
+         //new amount to push to DATABASE
+         purchase.stock_quantity = parseInt(purchase.stock_quantity) - parseInt(answer.amount);
+
+         var updatedStock = purchase.stock_quantity;
+         console.log(updatedStock);
+         var total = parseInt(answer.amount) * parseInt(purchase.price);
+
+         connection.query(`UPDATE products SET stock_quantity = ${updatedStock}  WHERE id = ${purchase.id}`, function(error){
+           if(error) throw error;
+           console.log("Your purchase was successful!\nYour total cost for your " + purchase.product_name + "(s) is $" + total);
+         })
+       }
+     }
+   };
     //console.log("so far so good");
-  })
+  });
 }
