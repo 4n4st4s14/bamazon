@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/4n4st4s14/bamazon#readme",
   "dependencies": {
+    "console.table": "^0.9.1",
     "inquirer": "^4.0.1",
     "mysql": "^2.15.0"
   }
