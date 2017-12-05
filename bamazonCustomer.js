@@ -83,7 +83,9 @@ function toBuy(res) {
          console.log(updatedStock);
          var total = parseInt(answer.amount) * parseInt(purchase.price);
 
-         connection.query(`UPDATE products SET stock_quantity = ${updatedStock}  WHERE id = ${purchase.id}`, function(error){
+         var sales = parseInt(total) + parseInt(purchase.product_sales);
+
+         connection.query(`UPDATE products SET stock_quantity = ${updatedStock}, product_sales = ${sales} WHERE id = ${purchase.id}`, function(error){
            if(error) throw error;
            console.log("Your purchase was successful!\nYour total cost for your " + purchase.product_name + "(s) is $" + total);
          })
@@ -92,4 +94,6 @@ function toBuy(res) {
    };
     //console.log("so far so good");
   });
+
+
 }

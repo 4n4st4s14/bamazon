@@ -22,6 +22,8 @@ connection.connect(function(err){
   start();
 });
 
+
+//function that gives the manager choices from a list
 function start(){
   inquirer.prompt({
      name: "managerChoice",
@@ -29,6 +31,8 @@ function start(){
      message: "Hello valued employee #35467! Please enter the index number of your task to proceed.",
      choices: ["View products for sale","View low inventory","Add to inventory","Add new product"]
   }).then(function(answer){
+
+    //switch statement to run function based on manager's choice
     switch (answer.managerChoice){
       case 'View products for sale':
 
@@ -69,6 +73,7 @@ function allProducts(){
   )
 }; //end allProducts
 
+//shows all inventory with quantity less than 5
 function lowInventory(){
   connection.query(
     "SELECT * FROM products WHERE stock_quantity < 5", function(err, res){
@@ -90,6 +95,7 @@ function lowInventory(){
   )
 };
 
+//allows manager to increas the stock_quantity column for a chosen item
 function addInventory(){
 
   connection.query(
@@ -131,11 +137,13 @@ function addInventory(){
 
           }
         }
+
+        var itemId = item.id;
         var addition = parseInt(answer.amount) + parseInt(item.stock_quantity);
         //console.log(item);
 
         connection.query(
-          `UPDATE products SET stock_quantity = ${addition} WHERE product_name = ${item.product_name}`,
+          `UPDATE products SET stock_quantity = ${addition} WHERE id = ${itemId}`,
 
            function(err, res){
             if (err) throw err;
@@ -151,6 +159,7 @@ function addInventory(){
   //update products.stock_quantity with  stockquantity + add
 };
 
+//allows manager to enter new item into products table
 function addNew(){
   inquirer.prompt([
     { name: "item",
