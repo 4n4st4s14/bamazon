@@ -58,7 +58,7 @@ function salesByDept(){
     ON departments.department_name = products.department_name
     GROUP BY departments.department_id, departments.department_name, departments.over_head_costs`, function(err, res){
       if (err) throw err;
-      console.table(res);
+      //console.table(res);
 
       //gotta set up this table
       console.log("\n" + ' Department ID  |  Department Name  |  Overhead Costs  |  Product Sales   |  Total Profit');

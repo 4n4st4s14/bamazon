@@ -89,8 +89,11 @@ function toBuy(res) {
            if(error) throw error;
            console.log("Your purchase was successful!\nYour total cost for your " + purchase.product_name + "(s) is $" + total);
          })
+
+         connection.end();
        }
      }
+
    };
     //console.log("so far so good");
   });
